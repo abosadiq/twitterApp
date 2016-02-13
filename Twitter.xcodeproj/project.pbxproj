@@ -154,6 +154,11 @@
 					1AD4CA5C1C68972900D58A19 = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = VNU7QMKB54;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};

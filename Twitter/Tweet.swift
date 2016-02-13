@@ -21,7 +21,7 @@ class Tweet: NSObject {
         
         let formatter = NSDateFormatter()
         formatter.dateFormat = "EEE MMM d HH:mm:ss Z y"
-        createAt = formatter.dateFromString(createAtString!) as? NSData
+        createAt = formatter.dateFromString(createAtString!) as? NSData;
         
     }
     
