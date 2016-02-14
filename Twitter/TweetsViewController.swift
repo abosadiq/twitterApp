@@ -5,20 +5,30 @@
 //  Created by Wafi MoHamed on 2/11/16.
 //  Copyright © 2016 wafi. All rights reserved.
 //
+
+
 import UIKit
 
-class TweetsViewController: UIViewController {
+class TweetsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
-    
     var tweets: [Tweet]?
+    
+    @IBOutlet weak var tableView: UITableView!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        tableView.dataSource = self
+        tableView.delegate = self
+        
         // Do any additional setup after loading the view.
-        TwitterClient.sharedInstance.homeTimelineWithParams(nil, completion: {(tweets, error) -> () in
+        
+        tableView.contentInset = UIEdgeInsetsMake(50, 0, 0, 0)
+        TwitterClient.sharedInstance.homeTimelineWithParams(nil) { (tweets, error) -> () in
             self.tweets = tweets
-            
-        })
+            self.tableView.reloadData()
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -29,17 +39,29 @@ class TweetsViewController: UIViewController {
     
     @IBAction func onLogout(sender: AnyObject) {
         User.currentUser!.logout()
+        self.dismissViewControllerAnimated(true, completion: nil)
+        
     }
     
     
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if let tweets = self.tweets {
+            return tweets.count
+        }
+        return 0
+    }
     
-    
-    
-    
-    
-    
-    
-    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("tableCell", forIndexPath: indexPath) as! TweetsTableViewCell
+        
+        cell.profileImage.setImageWithURL(NSURL(string: tweets![indexPath.row].user!.profileImageUrl!)!)
+        cell.userName.text = tweets![indexPath.row].user!.name!
+        cell.userHandle.text = tweets![indexPath.row].user!.screenname!
+        cell.tweetContentText.text = tweets![indexPath.row].text!
+        cell.createdTime.text = tweets![indexPath.row].createdAtString!
+        
+        return cell
+    }
     
 
     /*
@@ -51,5 +73,20 @@ class TweetsViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+
+    
+    
+    
+    
+    
+    //    func testTweets() {
+    ////        let tweet = tweets![0]
+    ////        print(tweet.user!.name)
+    ////        tweet.user?.name
+    ////        tweet.user?.screenname
+    ////        tweet.user?.profileImageUrl
+    ////        tweet.text?
+    ////        tweet.createdAtString?
+    //    }
 
 }

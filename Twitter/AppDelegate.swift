@@ -6,7 +6,9 @@
 //  Copyright © 2016 wafi. All rights reserved.
 //
 
+
 import UIKit
+import BDBOAuth1Manager
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -14,26 +16,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var storyboard = UIStoryboard(name: "Main", bundle: nil)
 
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "userDidLogout", name: userDidLogoutNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "userDidLogout", name: userDidLoginNotification, object: nil)
         
         if User.currentUser != nil {
-            // go to the logged screen
-            print("current user detected: \(User.currentUser?.name)")
-            let vc  = storyboard.instantiateViewControllerWithIdentifier("TweetsViewController") as UIViewController
+            // Go to the Logged In screen
+            print("Current user detected: \(User.currentUser?.name)")
+            let vc = storyboard.instantiateViewControllerWithIdentifier("TweetsViewController") as UIViewController
             window?.rootViewController = vc
+            
         }
+        
         return true
     }
     
-    
-    func userDidLogout(){
-        let vc  = storyboard.instantiateInitialViewController()! as UIViewController
+    func userDidLogout() {
+        let vc = storyboard.instantiateInitialViewController()!
+//        let vc = storyboard.instantiateViewControllerWithIdentifier("ViewController") as UIViewController
         window?.rootViewController = vc
-
     }
 
     func applicationWillResignActive(application: UIApplication) {
@@ -47,7 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
-        // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+        // Called as part of the transition from the background to the inactive state. here you can undo many of the changes made on entering the background.
     }
 
     func applicationDidBecomeActive(application: UIApplication) {
@@ -57,13 +59,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-    
-    
+
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
+        
         TwitterClient.sharedInstance.openURL(url)
+        
         return true
     }
-
 
 }
 
