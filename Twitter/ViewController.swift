@@ -2,13 +2,16 @@
 //  ViewController.swift
 //  Twitter
 //
-//  Created by Wafi MoHamed on 2/11/16.
+//  Created by Wafi MoHamed on 2/12/16.
 //  Copyright © 2016 wafi. All rights reserved.
 //
 
 
 import UIKit
+import AFNetworking
 import BDBOAuth1Manager
+
+
 
 class ViewController: UIViewController {
 
@@ -39,18 +42,6 @@ class ViewController: UIViewController {
         }
         
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    //        TwitterClient.sharedInstance.loginWithBlock() {
-    //            // go to next screen
-    //
-    //        }
 
 }
 

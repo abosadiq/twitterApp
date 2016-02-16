@@ -71,9 +71,8 @@
 		6520F2D91C67F5F80064A0B1 /* Twitter */ = {
 			isa = PBXGroup;
 			children = (
-				65D5E1821C68725200297429 /* ViewControllers */,
-				65D5E17F1C6866F400297429 /* TweetsViewController.swift */,
 				65D5E1811C68724A00297429 /* Views */,
+				65D5E1821C68725200297429 /* ViewControllers */,
 				658360691C6853E000E9490A /* Models */,
 				65F7F9321C67FC5E00629A70 /* API */,
 				6520F2DA1C67F5F80064A0B1 /* AppDelegate.swift */,
@@ -106,6 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				6520F2DC1C67F5F80064A0B1 /* ViewController.swift */,
+				65D5E17F1C6866F400297429 /* TweetsViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";

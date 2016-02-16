@@ -2,7 +2,7 @@
 //  User.swift
 //  Twitter
 //
-//  Created by Wafi MoHamed on 2/11/16.
+//  Created by Wafi MoHamed on 2/12/16.
 //  Copyright © 2016 wafi. All rights reserved.
 //
 
