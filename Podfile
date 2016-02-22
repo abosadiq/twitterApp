@@ -6,7 +6,8 @@ target 'Twitter' do
   pod "MBProgressHUD"
   pod "DOFavoriteButton"
   pod "AFNetworking"
-   pod "BDBOAuth1Manager"
-
+  pod "BDBOAuth1Manager"
+  pod "UIScrollView-InfiniteScroll"
+ 
  end
 

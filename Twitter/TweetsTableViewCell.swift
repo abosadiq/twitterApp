@@ -23,7 +23,7 @@ class TweetsTableViewCell: UITableViewCell {
     @IBOutlet weak var LikeButton: DOFavoriteButton!
     @IBOutlet weak var Retweet_CountLabel: UILabel!
     @IBOutlet weak var Likes_CountLabel: UILabel!
-   var button = DOFavoriteButton(frame: CGRectMake(0, 0, 44, 44), image: UIImage(named: "star"))
+//   var button = DOFavoriteButton(frame: CGRectMake(0, 0, 44, 44), image: UIImage(named: "star"))
     var  isRetweetButton: Bool = false
     var islikeButton: Bool = false
     var tweetID: String = ""
@@ -64,45 +64,66 @@ class TweetsTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         userName.preferredMaxLayoutWidth = userName.frame.size.width
-        //TweetContentText.preferredMaxLayoutWidth = TweetContentText.frame.size.height
+        //weetContentText.preferredMaxLayoutWidth = TweetContentText.frame.size.height
     }
     
     @IBAction func OnTweet(sender: AnyObject) {
-
-            if isRetweetButton {
+        TwitterClient.sharedInstance.retweet(Int(tweetID)!, params: nil, completion: { (error) ->() in
+            
+            if self.isRetweetButton {
         self.Retweet_CountLabel.text = String(self.tweet.retweetCount!) 
         self.RetweetButton.setImage(UIImage(named: "retweet-action-pressed"), forState: UIControlState.Normal)
-            isRetweetButton = false
+            self.isRetweetButton = false
             self.tweet.retweetCount!--
            self.Retweet_CountLabel.textColor = UIColor.grayColor()
-              
+            if self.Retweet_CountLabel.text == "0"{
+                self.Retweet_CountLabel.hidden = true
+                }
         } else{
             self.RetweetButton.setImage(UIImage(named: "Retweet"), forState: UIControlState.Normal)
         
             self.Retweet_CountLabel.textColor = UIColor(red: 0.0157, green: 0.9176, blue:0.5137, alpha: 1.0)
-            isRetweetButton = true
+            self.isRetweetButton = true
             self.tweet.retweetCount!++
-   }
-        Retweet_CountLabel.text = "\(self.tweet.retweetCount!)"
+                if self.Retweet_CountLabel.text == "0"{
+                    self.Retweet_CountLabel.hidden = false
+                }
+
+                
+            }
+        self.Retweet_CountLabel.text = "\(self.tweet.retweetCount!)"
+        })
     }
-    
     @IBAction func OnLike(sender: AnyObject) {
-         if islikeButton {
-      self.Likes_CountLabel.text = String(self.tweet.likeCount!);LikeButton.setImage(UIImage(named: "like-action"), forState: UIControlState.Normal)
+        TwitterClient.sharedInstance.likeTweet(Int(tweetID)!, params: nil, completion: { (error) ->() in
+
+         if self.islikeButton {
+      self.Likes_CountLabel.text = String(self.tweet.likeCount!);self.LikeButton.setImage(UIImage(named: "like-action"), forState: UIControlState.Normal)
             self.islikeButton = false
             self.tweet.likeCount!--
             self.Likes_CountLabel.textColor = UIColor.grayColor()
-        
-        }
+            if self.Likes_CountLabel.text == "0"{
+                self.Likes_CountLabel.hidden = true
+             }
+           }
         else{
-            LikeButton.setImage(UIImage(named: "Like"), forState: UIControlState.Normal)
+            self.LikeButton.setImage(UIImage(named: "Like"), forState: UIControlState.Normal)
             self.islikeButton = true
             self.tweet.likeCount!++
+            self.Likes_CountLabel.hidden = false
             self.Likes_CountLabel.textColor = UIColor(red: 0.8471, green: 0.1608, blue: 0.2039, alpha: 1.0) /* #d82934 */
+            if self.Likes_CountLabel.text == "0"{
+                self.Likes_CountLabel.hidden = false
           }
-           Likes_CountLabel.text = "\(self.tweet.likeCount!)"
+            }
+           
+           self.Likes_CountLabel.text = "\(self.tweet.likeCount!)"
+            })
     }
-    override func setSelected(selected: Bool, animated: Bool) {
+    
+    
+    
+   override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         // Configure the view for the selected state
         
