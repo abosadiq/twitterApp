@@ -20,7 +20,12 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
+        self.view.backgroundColor = UIColor(red: 0.3333, green: 0.6745, blue: 0.9333, alpha: 1.0) /* #55acee */
+        self.view.backgroundColor = UIColor(red: 0.3333, green: 0.6745, blue: 0.9333, alpha: 1.0) /* #55acee */
+
+        //loginButton.tintColor = UIColor.redColor()
+
+
         
     }
 
@@ -37,11 +42,21 @@ class ViewController: UIViewController {
             if user != nil {
                 self.performSegueWithIdentifier("loginSegue", sender: self)
             } else {
-                // handle error
+                //self.performSegueWithIdentifier("loginSegue", sender: self)
+
             }
         }
         
     }
+    override func viewDidAppear(animated: Bool) {
+        
+        if User.currentUser != nil{
+            self.performSegueWithIdentifier("loginSegue", sender: self)
+        }
+        
+    }
+    
+
 
 }
 

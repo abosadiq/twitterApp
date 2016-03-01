@@ -15,7 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var storyboard = UIStoryboard(name: "Main", bundle: nil)
-
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
@@ -24,14 +24,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if User.currentUser != nil {
             // Go to the Logged In screen
             print("Current user detected: \(User.currentUser?.name)")
-            let vc = storyboard.instantiateViewControllerWithIdentifier("TweetsViewController") as UIViewController
-            window?.rootViewController = vc
+            let vc = storyboard.instantiateViewControllerWithIdentifier("navcon") as! UINavigationController;
+            
+             //self.performSegueWithIdentifier("loginSegue", sender: self)
+            
+                    window?.rootViewController = vc
             
         }
         
         return true
     }
-    
+//     let userDefaults = NSUserDefaults.standardUserDefaults()
+//        
+//        if User.currentUser != nil {
+//            print("Current user detected: \(User.currentUser?.name)")
+//            let vc = storyboard.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
+//            window?.rootViewController = vc
+//            
+//        } else {
+//            let vc = storyboard.instantiateViewControllerWithIdentifier("navcon") as? UINavigationController
+//            window?.rootViewController = vc
+//        }
+//        
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: "userDidLogout", name: userDidLoginNotification, object: nil)
+//        
+//        return true
+//    }
+
     
     func userDidLogout() {
         let vc = storyboard.instantiateInitialViewController()!

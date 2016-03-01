@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "makefg.php.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "Retweet.png",
       "scale" : "2x"
     },
     {

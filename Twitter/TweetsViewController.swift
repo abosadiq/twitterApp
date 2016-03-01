@@ -9,6 +9,7 @@
 
 import UIKit
 import MBProgressHUD
+import DOFavoriteButton
 
 class TweetsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate {
     
@@ -16,38 +17,55 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     var loadingMoreView:InfiniteScrollActivityView?
     var isMoreDataLoading = false
     var loadMoreOffset = 20
-    
     @IBOutlet weak var tableView: UITableView!
     var refrechController: UIRefreshControl!
+    //let button = DOFavoriteButton(frame: CGRectMake(0, 0, 44, 44), image: UIImage(named: "like-action"))
     
     override func viewDidLoad() {
         super.viewDidLoad()
         networker_Request()
+        //self.view.addSubview(button)
         tableView.dataSource = self
         tableView.delegate = self
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 150
-        // Do any additional setup after loading the view.
         
-        tableView.contentInset = UIEdgeInsetsMake(50, 0, 0, 0)
+        //        self.automaticallyAdjustsScrollViewInsets = false
+        
+        // Do any additional setup after loading the view.
+        //self.view.addSubview(button)
+        //        tableView.contentInset = UIEdgeInsetsMake(50, 0, 0, 0)
         TwitterClient.sharedInstance.homeTimelineWithParams(nil) { (tweets, error) -> () in
             self.tweets = tweets
             self.tableView.reloadData()
             self.refresher_contorl()
             //tableView.infiniteScrollIndicatorStyle.tintColor = UIColor.grayColor()
             self.tableView.infiniteScrollIndicatorStyle = .Gray
-            //self.tableView.infiniteScrollIndicatorView = InfiniteScrollActivityView(frame: CGRectMake(24, 90, 24, 24))
-
-            self.tableView.addInfiniteScrollWithHandler { (scrollView) -> Void in
-                let tableView = scrollView as! UITableView
-                
-                tableView.reloadData()
-                
-            }
-            //            tableView.infiniteScrollIndicatorView = CustomInfiniteIndicator(frame: CGRectMake(0, 0, 24, 24))
             
+            self.tableView.addInfiniteScrollWithHandler { (scrollView) -> Void in
+                _ = scrollView as! UITableView
+                self.refresher_contorl()
+                self.tableView.reloadData()
+                self.setupInfiniteScrollView()
+            }
+            self.navigationController?.navigationBar.barTintColor = UIColor(red: 0.3333, green: 0.6745, blue: 0.9333, alpha: 1.0) /* #55acee */
+            self.navigationController!.navigationBar.translucent = false
+            //self.navigationController!.navigationBar.tintColor = UIColor.blueColor()
+            //self.navigationItem.title = "Twitter"
         }
-        setupInfiniteScrollView()
+        self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()]
+        self.navigationController!.navigationBar.tintColor = UIColor.redColor()
+        let image_view = UIImageView(frame: CGRect(x: 0, y:0, width:40, height:40))
+        image_view.contentMode = .ScaleAspectFit
+        
+        let image = UIImage(named: "tweet")
+        image_view.image = image
+        self.navigationItem.titleView = image_view
+        UIApplication.sharedApplication().statusBarStyle = .Default;
+        tableView.rowHeight = UITableViewAutomaticDimension;
+        
+        
+        
         
     }
     func networker_Request(){
@@ -58,6 +76,8 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
             MBProgressHUD.hideHUDForView(self.view, animated: true)
             self.tweets = tweets
             self.tableView.reloadData()
+            
+            
         }
     }
     override func didReceiveMemoryWarning() {
@@ -69,24 +89,29 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     
     func  refresher_contorl(){
         self.refrechController = UIRefreshControl()
-        self.refrechController.attributedTitle = NSAttributedString(string: "Pull me to refresh")
+        let label:NSAttributedString = NSAttributedString(string: "Pull me to refresh")
+        refrechController.attributedTitle = label
         
         self.refrechController.addTarget(self,action: "refresher:", forControlEvents: UIControlEvents.ValueChanged)
         self.tableView.addSubview(refrechController)
         refrechController.backgroundColor = UIColor(red: 220/255, green: 220/255, blue: 220/255, alpha: 1)
-        refrechController.tintColor = UIColor(red: 155/255, green: 155/255, blue: 154/255, alpha: 1)
+        refrechController.tintColor = UIColor(red: 155/255, green: 155/55, blue: 154/25, alpha: 1)
+        
         
     }
     func refresher(sender:AnyObject){
         self.tableView.reloadData()
         networker_Request()
         self.refrechController.endRefreshing()
+        
+        
     }
     
     
     @IBAction func onLogout(sender: AnyObject) {
-        User.currentUser!.logout()
+        User.currentUser?.logout()
         self.dismissViewControllerAnimated(true, completion: nil)
+        view.endEditing(true)
     }
     
     
@@ -137,6 +162,7 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
             
             self.addSubview(activityIndicatorView)
         }
+        
         
         func stopAnimating() {
             self.activityIndicatorView.stopAnimating()
@@ -205,14 +231,57 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
             if (scrollView.contentOffset.y > scrollOffsetThreshold && tableView.dragging) {
                 isMoreDataLoading = true
                 let frame = CGRectMake(0, tableView.contentSize.height, tableView.bounds.size.width, InfiniteScrollActivityView.defaultHeight)
-                loadingMoreView?.frame = frame
-                loadingMoreView!.startAnimating()
+             loadingMoreView?.frame = frame
+                loadingMoreView?.startAnimating()
                 
-                //load more data
+                //load more dataz
                 loadMoreData()
             }
         }
     }
     
+    override func viewDidAppear(animated: Bool) {
+        self.navigationController!.navigationBar.tintColor = UIColor.redColor()
+        
+    }
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        if (segue.identifier == "detialSeg") {
+            let cell = sender as! UITableViewCell
+            let indexPath = tableView.indexPathForCell(cell)
+            let tweet = tweets![indexPath!.row]
+            let DetailsController = segue.destinationViewController as! DetailViewController
+               DetailsController.tweet = tweet
+            
+            
+        } else if (segue.identifier) == "ReplySegue" {
+            let button = sender as! UIButton
+            let view = button.superview!
+            let cell = view.superview as! TweetsTableViewCell
+            let indexPath = tableView.indexPathForCell(cell)
+            let tweet = tweets![indexPath!.row]
+            let user = User.currentUser
+            let ReplyController = segue.destinationViewController as! ReplyingViewController
+            ReplyController.tweet = tweet
+            ReplyController.user = user
+        }
+        else if (segue.identifier) == "Composed" {
+            let user = User.currentUser
+            let composedController = segue.destinationViewController as! composedViewController
+            composedController.user = user
+            
+        }
+        else if (segue.identifier) == "picSegue"{
+            let button = sender as! UIButton
+            let view = button.superview!
+            let cell = view.superview as! TweetsTableViewCell
+            let indexPath = tableView.indexPathForCell(cell)
+            let tweet = tweets![indexPath!.row]
+            let UserProfileViewController = segue.destinationViewController as! userViewController
+            UserProfileViewController.tweet = tweet
+        }
+        
+        
+    }
     
 }

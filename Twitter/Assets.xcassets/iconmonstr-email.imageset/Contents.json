@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "iconmonstr-email.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "Retweet.png",
       "scale" : "2x"
     },
     {
