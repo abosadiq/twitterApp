@@ -1,3 +1,4 @@
+
 //
 //  TweetsTableViewCell.swift
 //  Twitter
@@ -28,49 +29,48 @@ class TweetsTableViewCell: UITableViewCell {
 
 
     @IBOutlet weak var LikeButtonView: UIView!
-    
     var  isRetweetButton: Bool = false
     var islikeButton: Bool = false
     var tweetID: String = ""
-   
+    
     
     var tweet: Tweet! {
         didSet {
-
-           TweetContentText.text = tweet.text
-        userName.text = "\((tweet.user?.name)!)"
-        userHandle.text = "@\(tweet.user!.screenname!)"
-        if (tweet.user?.profileImageUrl != nil){
-            let imageUrl = tweet.user?.profileImageUrl!
-            profileImage.setImageWithURL(NSURL(string: imageUrl!)!)
-             } else{
-            print("No profile image found")
-        }
-        Retweet_CountLabel.text = String(tweet.retweetCount!)
-        Likes_CountLabel.text = String(tweet.likeCount!)
-        tweetID = tweet.id
+            
+            TweetContentText.text = tweet.text
+            userName.text = "\((tweet.user?.name)!)"
+            userHandle.text = "@\(tweet.user!.screenname!)"
+            if (tweet.user?.profileImageUrl != nil){
+                let imageUrl = tweet.user?.profileImageUrl!
+                profileImage.setImageWithURL(NSURL(string: imageUrl!)!)
+            } else{
+                print("No profile image found")
+            }
+            Retweet_CountLabel.text = String(tweet.retweetCount!)
+            Likes_CountLabel.text = String(tweet.likeCount!)
+            tweetID = tweet.id
             self.Likes_CountLabel.textColor = UIColor.grayColor()
             self.Retweet_CountLabel.textColor = UIColor.grayColor()
-
-        Retweet_CountLabel.text! == "0" ? (Retweet_CountLabel.hidden = true) : (Retweet_CountLabel.hidden = false)
-        Likes_CountLabel.text! == "0" ? (Likes_CountLabel.hidden = true) : (Likes_CountLabel.hidden = false)
+            
+            Retweet_CountLabel.text! == "0" ? (Retweet_CountLabel.hidden = true) : (Retweet_CountLabel.hidden = false)
+            Likes_CountLabel.text! == "0" ? (Likes_CountLabel.hidden = true) : (Likes_CountLabel.hidden = false)
             LikeButton.addTarget(self, action: Selector("tapped:"), forControlEvents: .TouchUpInside)
             LikeButton.imageColorOn = UIColor(red: 0.9098, green: 0.2314, blue: 0.2078, alpha: 1.0) /* #e83b35 */
             LikeButton.circleColor = UIColor(red: 0.4431, green: 0.1647, blue: 0.4588, alpha: 1.0) /* #712a75 */
             LikeButton.lineColor = UIColor(red: 0.3333, green: 0.6745, blue: 0.9333, alpha: 1.0) /* #55acee */
-             //LikeButton.addTarget(self, action: Selector("tappedButton:"), forControlEvents: UIControlEvents.TouchUpInside)
-          LikeButton.duration = 3.0 // default: 1.0
-
-           self.LikeButtonView!.addSubview(LikeButton)
+            //LikeButton.addTarget(self, action: Selector("tappedButton:"), forControlEvents: UIControlEvents.TouchUpInside)
+            LikeButton.duration = 3.0 // default: 1.0
+            
+            self.LikeButtonView!.addSubview(LikeButton)
             TweeterButton.addTarget(self, action: Selector("clicked:"), forControlEvents: .TouchUpInside)
             TweeterButton.imageColorOn = UIColor(red: 0.098, green: 0.8118, blue: 0.5255, alpha: 1.0) /* #19cf86 */
             TweeterButton.duration = 2.0
             TweeterButton.circleColor = UIColor(hue: 101/360, saturation: 87/100, brightness: 45/100, alpha: 1.0) /* #2e720e */
             TweeterButton.lineColor = UIColor(red: 0.3333, green: 0.6745, blue: 0.9333, alpha: 1.0) /* #55acee */
             self.RetweetButton.addSubview(self.TweeterButton)
-             makingRoundedImageProfileWithRoundedBorder()
-          
-         }
+            makingRoundedImageProfileWithRoundedBorder()
+            
+        }
         
     }
     
@@ -82,14 +82,14 @@ class TweetsTableViewCell: UITableViewCell {
             
             TwitterClient.sharedInstance.likeTweet(Int(tweetID)!, params: nil, completion: { (error) ->() in
                 
-                    //self.Likes_CountLabel.text = String(self.tweet.likeCount!);self.LikeButton.setImage(UIImage(named: "like-action"), forState: UIControlState.Normal)
-                    self.islikeButton = false
-                    self.tweet.likeCount!--
-                    self.Likes_CountLabel.textColor = UIColor.grayColor()
-                    if self.Likes_CountLabel.text == "0"{
-                        self.Likes_CountLabel.hidden = true
-                    }
-
+                //self.Likes_CountLabel.text = String(self.tweet.likeCount!);self.LikeButton.setImage(UIImage(named: "like-action"), forState: UIControlState.Normal)
+                self.islikeButton = false
+                self.tweet.likeCount!--
+                self.Likes_CountLabel.textColor = UIColor.grayColor()
+                if self.Likes_CountLabel.text == "0"{
+                    self.Likes_CountLabel.hidden = true
+                }
+                
                 
                 self.Likes_CountLabel.text = "\(self.tweet.likeCount!)"
             })
@@ -101,31 +101,31 @@ class TweetsTableViewCell: UITableViewCell {
             
             TwitterClient.sharedInstance.likeTweet(Int(tweetID)!, params: nil, completion: { (error) ->() in
                 
-              
-                    // self.LikeButton.setImage(UIImage(named: "Like"), forState: UIControlState.Normal)
-                    self.islikeButton = true
-              
-                    self.tweet.likeCount!++
-            
-
+                
+                // self.LikeButton.setImage(UIImage(named: "Like"), forState: UIControlState.Normal)
+                self.islikeButton = true
+                
+                self.tweet.likeCount!++
+                
+                
+                self.Likes_CountLabel.hidden = false
+                self.Likes_CountLabel.textColor = UIColor(red: 0.9098, green: 0.1098, blue: 0.3098, alpha: 1.0) /* #e81c4f */
+                if self.Likes_CountLabel.text == "0"{
                     self.Likes_CountLabel.hidden = false
-                    self.Likes_CountLabel.textColor = UIColor(red: 0.9098, green: 0.1098, blue: 0.3098, alpha: 1.0) /* #e81c4f */
-                    if self.Likes_CountLabel.text == "0"{
-                        self.Likes_CountLabel.hidden = false
-                    }
-                    self.Likes_CountLabel.text = "\(self.tweet.likeCount!)"
-
-                })
-
-            }
+                }
+                self.Likes_CountLabel.text = "\(self.tweet.likeCount!)"
+                
+            })
+            
+        }
     }
-  
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
         userName.preferredMaxLayoutWidth = userName.frame.size.width
         profileImage.layer.cornerRadius = 4
-       profileImage.clipsToBounds = true
+        profileImage.clipsToBounds = true
         userName.sizeToFit()
     }
     
@@ -181,14 +181,14 @@ class TweetsTableViewCell: UITableViewCell {
             
             
         }
-       
+        
         
     }
     
-
     
     
-   override func setSelected(selected: Bool, animated: Bool) {
+    
+    override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         // Configure the view for the selected state
         
@@ -204,7 +204,6 @@ class TweetsTableViewCell: UITableViewCell {
         // Adding a border to the image profile
         self.profileImage.layer.borderWidth = 15.0
         self.profileImage.layer.borderColor = UIColor.clearColor().CGColor
-    }
+}
 
-    
 }

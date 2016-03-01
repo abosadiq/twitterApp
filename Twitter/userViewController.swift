@@ -40,7 +40,8 @@ class userViewController: UIViewController {
         }
          CountFollowers.sizeToFit()
          CountFollowing.sizeToFit()
-        
+        userText.sizeToFit()
+         makingRoundedImageProfileWithRoundedBorder()
         
     }
 
@@ -51,6 +52,17 @@ class userViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    private func makingRoundedImageProfileWithRoundedBorder() {
+        // Making a circular image profile.
+        //        self.myUIImageView.layer.cornerRadius = self.myUIImageView.frame.size.width / 2
+        // Making a rounded image profile.
+        self.profileImage.layer.masksToBounds = false
+        self.profileImage.layer.cornerRadius = 30.0
+        self.profileImage.clipsToBounds = true
+        self.profileImage.layer.borderWidth = 15.0
+        self.profileImage.layer.borderColor = UIColor.clearColor().CGColor
     }
     
 

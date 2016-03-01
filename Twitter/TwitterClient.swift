@@ -16,7 +16,7 @@ let twitterConsumerSecret = "vPy3pEo8Zfowu791RnuTauYGFpazBgbkHvz6podOwTxkpgUT3n"
 let twitterBaseURL = NSURL(string: "https://api.twitter.com")
 
 class TwitterClient: BDBOAuth1SessionManager {
-
+    
     var loginWithCompletion: ((user: User?, error: NSError?) -> ())?
     
     class var sharedInstance: TwitterClient {

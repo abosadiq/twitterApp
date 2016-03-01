@@ -78,6 +78,7 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
             self.tableView.reloadData()
             
             
+            
         }
     }
     override func didReceiveMemoryWarning() {
@@ -100,10 +101,13 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         
     }
     func refresher(sender:AnyObject){
+        //networker_Request()
+        
         self.tableView.reloadData()
         networker_Request()
+
         self.refrechController.endRefreshing()
-        
+         
         
     }
     

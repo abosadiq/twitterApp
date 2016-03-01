@@ -39,7 +39,8 @@ class composedViewController: UIViewController, UITextViewDelegate {
         hadleName.text = "@\(user!.screenname!)"
         text_view.delegate = self
         CountsLabel.text = "140"
-      initialText.text = "Tweet Here ...."
+      initialText.text = "Tweet Here"
+        initialText.textColor = UIColor.grayColor()
      initialText.sizeToFit()
        text_view.addSubview(initialText)
       initialText.hidden = !text_view.text.isEmpty

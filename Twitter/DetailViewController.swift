@@ -37,8 +37,8 @@ class DetailViewController: UIViewController {
         
         tweetID = tweet!.id
         print("tweetID now = \(tweetID)")
-        tweetText.text = tweet? .text
-        username.text = "\(tweet!.user?.name!)"
+        tweetText.text = tweet! .text
+        username.text = "\(tweet?.user!.name!)"
         userHandle.text = "@\(tweet!.user!.screenname!)"
         
         if (tweet!.user!.profileImageUrl != nil){
@@ -56,8 +56,8 @@ class DetailViewController: UIViewController {
         timeCount.text = "\(dateString)"
         
         
-         tweetscountLabel.text = String(tweet!.retweetCount!)
-       favoriteLabel.text = String(tweet!.likeCount!)
+         tweetscountLabel.text = String(tweet!.retweetCount)
+       favoriteLabel.text = String(tweet!.likeCount)
         
         tweetText.sizeToFit()
 

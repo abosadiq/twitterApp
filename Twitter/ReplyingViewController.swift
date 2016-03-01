@@ -10,10 +10,12 @@ import UIKit
 
 class ReplyingViewController: UIViewController, UITextViewDelegate {
 
+    @IBOutlet weak var smallImage: UIImageView!
     @IBOutlet weak var Text_view: UITextView!
+    @IBOutlet weak var replyButton: UIButton!
     @IBOutlet weak var text_field: UITextField!
     //@IBOutlet weak var text_View: UILabel!
-    @IBOutlet weak var replyButton: UIButton!
+  //  @IBOutlet weak var replyButton: UIButton!
     @IBOutlet weak var ReplyLetterCounts: UILabel!
     @IBOutlet weak var userhadel: UILabel!
     @IBOutlet weak var username: UILabel!
@@ -43,6 +45,13 @@ class ReplyingViewController: UIViewController, UITextViewDelegate {
         Text_view.becomeFirstResponder()
        replyButton.enabled = false
         username.sizeToFit()
+        if (user?.profileImageUrl != nil){
+            let imageUrl = user!.profileImageUrl!
+           smallImage.setImageWithURL(NSURL(string: imageUrl)!)
+        } else{
+            print("nothing Showed")
+        }
+          makingRoundedImageProfileWithRoundedBorder() 
     }
     
     override func didReceiveMemoryWarning() {
@@ -50,6 +59,12 @@ class ReplyingViewController: UIViewController, UITextViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func onCancel(sender: AnyObject) {
+        self.dismissViewControllerAnimated(false, completion: nil)
+        print("cancel")
+
+        
+    }
     func textViewDidChange(textView: UITextView) {
         if  0 < (141 - Text_view.text!.characters.count) {
           replyButton.enabled = true
@@ -65,15 +80,27 @@ class ReplyingViewController: UIViewController, UITextViewDelegate {
         tweetMessage = Text_view.text
         let TweetMessage = tweetMessage.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
         TwitterClient.sharedInstance.ReplyToTweet(TweetMessage!, statusID: Int(tweet!.id)!, params: nil, completion: { (error) -> () in
+            self.dismissViewControllerAnimated(false, completion: nil)
+
         })
-        navigationController?.popViewControllerAnimated(true)
+           navigationController?.popViewControllerAnimated(true)
     }
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print("did select row")
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        view.endEditing(true)
+//    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+//        print("did select row")
+//        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+//        view.endEditing(true)
+//    }
+    private func makingRoundedImageProfileWithRoundedBorder() {
+        // Making a circular image profile.
+        //        self.myUIImageView.layer.cornerRadius = self.myUIImageView.frame.size.width / 2
+        // Making a rounded image profile.
+        self.smallImage.layer.masksToBounds = false
+        self.smallImage.layer.cornerRadius = 25.0
+        self.smallImage.clipsToBounds = true
+        self.smallImage.layer.borderWidth = 15.0
+        self.smallImage.layer.borderColor = UIColor.clearColor().CGColor
     }
-    
+
 
 
     }

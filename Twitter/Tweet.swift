@@ -17,6 +17,8 @@ class Tweet: NSObject {
     var Time: String!
     var PassedTime: Int?
     var retweetCount: Int?
+    var retweeted: Bool = false
+    var favorite:Bool = false
     var id: String
     var likeCount: Int?
     
@@ -31,6 +33,10 @@ class Tweet: NSObject {
         id = String(dictionary["id"]!)
         retweetCount = dictionary["retweet_count"] as? Int
         likeCount = dictionary["favorite_count"] as? Int
+        retweeted = (dictionary["retweeted"] as? Bool) ?? false;
+        favorite = (dictionary["favorited"] as? Bool) ?? false;
+
+        
         let now = NSDate()
         let then = createdAt
         PassedTime = Int(now.timeIntervalSinceDate(then!))

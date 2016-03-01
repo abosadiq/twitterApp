@@ -25,7 +25,9 @@ class ViewController: UIViewController {
 
         //loginButton.tintColor = UIColor.redColor()
 
-
+        if User.currentUser != nil {
+            self.performSegueWithIdentifier("loginSegue", sender: self)
+        }
         
     }
 
@@ -54,9 +56,9 @@ class ViewController: UIViewController {
             self.performSegueWithIdentifier("loginSegue", sender: self)
         }
         
+        
     }
     
-
 
 }
 

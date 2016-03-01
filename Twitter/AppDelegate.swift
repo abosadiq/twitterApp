@@ -24,11 +24,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if User.currentUser != nil {
             // Go to the Logged In screen
             print("Current user detected: \(User.currentUser?.name)")
-            let vc = storyboard.instantiateViewControllerWithIdentifier("navcon") as! UINavigationController;
+//            let vc = storyboard.instantiateViewControllerWithIdentifier("navcon") as! UINavigationController;
             
-             //self.performSegueWithIdentifier("loginSegue", sender: self)
+//             self.performSegueWithIdentifier("loginSegue", sender: self)
             
-                    window?.rootViewController = vc
+//                    window?.rootViewController = vc
             
         }
         

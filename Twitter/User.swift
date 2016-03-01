@@ -23,7 +23,7 @@ class User: NSObject {
     var follower: Int?
     var following: Int?
     var profileBannerURL: String?
-
+    
     
     init(dictionary: NSDictionary) {
         self.dictionary = dictionary
@@ -34,7 +34,7 @@ class User: NSObject {
         tagline = dictionary["description"] as? String
         follower = dictionary["followers_count"] as? Int
         profileBannerURL = dictionary["profile_banner_url"] as? String
-       following = dictionary["friends_count"] as? Int
+        following = dictionary["friends_count"] as? Int
     }
     
     func logout() {
@@ -46,18 +46,18 @@ class User: NSObject {
     
     class var currentUser: User? {
         get {
-            if _currentUser == nil {
-            let data = NSUserDefaults.standardUserDefaults().objectForKey(currentUserKey) as? NSData
-                if data != nil {
-                    do {
-                        let dictionary = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions())
-                        _currentUser = User(dictionary: dictionary as! NSDictionary)
-                    } catch _ {
+        if _currentUser == nil {
+        let data = NSUserDefaults.standardUserDefaults().objectForKey(currentUserKey) as? NSData
+        if data != nil {
+        do {
+        let dictionary = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions())
+        _currentUser = User(dictionary: dictionary as! NSDictionary)
+    } catch _ {
         
-                    }
-                }
-            }
-            return _currentUser
+        }
+        }
+        }
+        return _currentUser
         }
         set(user) {
             _currentUser = user
