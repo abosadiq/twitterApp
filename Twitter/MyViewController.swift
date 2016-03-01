@@ -8,10 +8,11 @@
 
 import UIKit
 
-class MyViewController: UIViewController, UITableViewDelegate {
+class MyViewController: UIViewController, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
+    @IBOutlet weak var etting: UIButton!
     @IBOutlet weak var onLogout: UIButton!
-    @IBOutlet weak var textLabel: UILabel!
+       @IBOutlet weak var textLabel: UILabel!
     @IBOutlet weak var followersCount: UILabel!
     @IBOutlet weak var followingCount: UILabel!
     @IBOutlet weak var userHandle: UILabel!
@@ -70,6 +71,46 @@ class MyViewController: UIViewController, UITableViewDelegate {
         
 
     }
+    
+    
+    @IBAction func onImageChange(sender: AnyObject) {
+        let picker_2 = UIImagePickerController()
+        
+        picker_2.delegate = self
+        picker_2.sourceType = .Camera
+        
+        presentViewController(picker_2, animated: true, completion: nil)
+        
+        
+
+    }
+    
+    @IBAction func onEtting(sender: AnyObject) {
+        
+        let picker = UIImagePickerController()
+        
+        picker.delegate = self
+        picker.sourceType = .PhotoLibrary
+        
+        presentViewController(picker, animated: true, completion: nil)
+        
+        
+    }
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        
+        coverImage.image = info[UIImagePickerControllerOriginalImage] as? UIImage
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func imagePickerController_2(picker_2: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        
+        coverImage.image = info[UIImagePickerControllerOriginalImage] as? UIImage
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+
+    
     func singOut() {
         let actionController: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet);
         
