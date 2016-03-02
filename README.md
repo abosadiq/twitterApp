@@ -105,7 +105,7 @@ Here's a walkthrough of implemented user stories:
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 HAD ISSUE WITH WALKTHROUGH GIF, THIS IS A YOUTUBE VIDEO SHOWING MY WALKTHROUGH
-https://youtu.be/XLQ29nMAK9A
+https://youtu.be/NcGS-uPFMmQ
 ## Notes
 
 Describe any challenges encountered while building the app.

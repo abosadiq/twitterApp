@@ -20,12 +20,12 @@ class MyViewController: UIViewController, UITableViewDelegate, UIImagePickerCont
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var coverImage: UIImageView!
     @IBOutlet weak var myprifileImage: UIImageView!
-    
+    let imagePicker = UIImagePickerController()
     var tweets: [Tweet]?
     var tweet: Tweet?
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        imagePicker.delegate = self
        myprifileImage.setImageWithURL(NSURL(string: (User.currentUser!.profileImageUrl)!)!)
         userName.text = "\((User.currentUser!.name)!)"
         userHandle.text = "@\(User.currentUser!.screenname!)"
@@ -53,7 +53,7 @@ class MyViewController: UIViewController, UITableViewDelegate, UIImagePickerCont
         // cameraicon
         if let myImage = UIImage(named: "camera-icon") {
             let tintableImage = myImage.imageWithRenderingMode(.AlwaysTemplate)
-           coverImage.image = tintableImage
+          //camera.buttonType = tintableImage
         }
 
           userHandle.sizeToFit()
@@ -78,7 +78,21 @@ class MyViewController: UIViewController, UITableViewDelegate, UIImagePickerCont
         
 
     }
-    
+//    @IBAction func onCameraTap(sender: UIButton) {
+//        imagePicker.allowsEditing = false
+//        presentViewController(imagePicker, animated: true, completion: nil)
+//    }
+//    
+//    func imagePicker_Controller(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
+//            if let pickedImage =  info[UIImagePickerControllerOriginalImage] as? UIImage {
+//               myprifileImage.contentMode = .ScaleAspectFit
+//               myprifileImage.image = pickedImage
+//
+//            }
+//       
+//           dismissViewControllerAnimated(true, completion: nil)
+//    }
+//    
     // access to the camera Function
     
     @IBAction func onImageChange(sender: AnyObject) {
@@ -110,6 +124,7 @@ class MyViewController: UIViewController, UITableViewDelegate, UIImagePickerCont
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         
         coverImage.image = info[UIImagePickerControllerOriginalImage] as? UIImage
+        
         dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -120,6 +135,8 @@ class MyViewController: UIViewController, UITableViewDelegate, UIImagePickerCont
         
         
         coverImage.image = info[UIImagePickerControllerOriginalImage] as? UIImage
+       
+
         dismissViewControllerAnimated(true, completion: nil)
         
         //UIImageWriteToSavedPhotosAlbum(coverImage.image!, self, "image:didFinishSavingWithError:contextInfo:", nil)
