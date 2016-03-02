@@ -10,6 +10,7 @@ import UIKit
 
 class MyViewController: UIViewController, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
+    @IBOutlet weak var camera: UIButton!
     @IBOutlet weak var etting: UIButton!
     @IBOutlet weak var onLogout: UIButton!
        @IBOutlet weak var textLabel: UILabel!
@@ -49,6 +50,12 @@ class MyViewController: UIViewController, UITableViewDelegate, UIImagePickerCont
             
 
         }
+        // cameraicon
+        if let myImage = UIImage(named: "camera-icon") {
+            let tintableImage = myImage.imageWithRenderingMode(.AlwaysTemplate)
+           coverImage.image = tintableImage
+        }
+
           userHandle.sizeToFit()
         makingRoundedImageProfileWithRoundedBorder()
         // Do any additional setup after loading the view.
@@ -72,6 +79,7 @@ class MyViewController: UIViewController, UITableViewDelegate, UIImagePickerCont
 
     }
     
+    // access to the camera Function
     
     @IBAction func onImageChange(sender: AnyObject) {
         let picker_2 = UIImagePickerController()
@@ -84,6 +92,7 @@ class MyViewController: UIViewController, UITableViewDelegate, UIImagePickerCont
         
 
     }
+     //access to the PhotoLibrary function
     
     @IBAction func onEtting(sender: AnyObject) {
         
@@ -94,8 +103,9 @@ class MyViewController: UIViewController, UITableViewDelegate, UIImagePickerCont
         
         presentViewController(picker, animated: true, completion: nil)
         
-        
     }
+    
+    // impelmenting the onEtting function
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         
@@ -103,10 +113,18 @@ class MyViewController: UIViewController, UITableViewDelegate, UIImagePickerCont
         dismissViewControllerAnimated(true, completion: nil)
     }
     
+    
+    // impelmenting the onImageChange function
+    
     func imagePickerController_2(picker_2: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        
         
         coverImage.image = info[UIImagePickerControllerOriginalImage] as? UIImage
         dismissViewControllerAnimated(true, completion: nil)
+        
+        //UIImageWriteToSavedPhotosAlbum(coverImage.image!, self, "image:didFinishSavingWithError:contextInfo:", nil)
+        
+
     }
     
 
